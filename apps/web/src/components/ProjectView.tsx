@@ -12,7 +12,7 @@ import { createHtmlArtifactManifest, inferLegacyManifest } from '../artifacts/ma
 import { resolveHtmlPointerArtifactTarget } from '../artifacts/pointer';
 import { validateHtmlArtifact } from '../artifacts/validate';
 import { createArtifactParser } from '../artifacts/parser';
-import { useT } from '../i18n';
+import { useI18n } from '../i18n';
 import { streamMessage } from '../providers/anthropic';
 import {
   fetchChatRunStatus,
@@ -464,7 +464,7 @@ export function ProjectView({
   onProjectChange,
   onProjectsRefresh,
 }: Props) {
-  const t = useT();
+  const { locale, t } = useI18n();
   const analytics = useAnalytics();
   // P0 page_view page_name=chat_panel — fire once per project mount.
   // ProjectView outlives conversation switches (ChatPane is keyed by
@@ -1366,6 +1366,7 @@ export function ProjectView({
       audioVoiceOptions,
       audioVoiceOptionsError: audioVoiceOptionsLookupError,
       streamFormat: config.mode === 'api' ? 'plain' : undefined,
+      locale,
       userInstructions: config.customInstructions,
       projectInstructions: project.customInstructions,
     });
@@ -1379,6 +1380,7 @@ export function ProjectView({
     designSystems,
     config.mode,
     config.customInstructions,
+    locale,
   ]);
 
   const persistMessage = useCallback(
@@ -2421,6 +2423,7 @@ export function ProjectView({
           research: meta?.research,
           model: choice?.model ?? null,
           reasoning: choice?.reasoning ?? null,
+          locale,
           onRunCreated: (runId) => {
             const pinnedAssistant = {
               ...latestAssistantMsg,
@@ -2558,6 +2561,7 @@ export function ProjectView({
       currentConversationBusy,
       messages,
       config,
+      locale,
       agentsById,
       composedSystemPrompt,
       onTouchProject,

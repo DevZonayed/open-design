@@ -8767,6 +8767,7 @@ export async function startServer({
     skillId,
     designSystemId,
     streamFormat,
+    locale,
     connectedExternalMcp,
     appliedPluginSnapshotId,
   }) => {
@@ -9115,6 +9116,7 @@ export async function startServer({
       critique: critiqueShouldRun ? { ...critiqueCfg, enabled: true } : undefined,
       critiqueBrand: critiqueShouldRun ? critiqueBrand : undefined,
       critiqueSkill: critiqueShouldRun ? critiqueSkill : undefined,
+      locale: typeof locale === 'string' ? locale : undefined,
       streamFormat,
       connectedExternalMcp: Array.isArray(connectedExternalMcp)
         ? connectedExternalMcp
@@ -9225,6 +9227,7 @@ export async function startServer({
       commentAttachments = [],
       model,
       reasoning,
+      locale,
       research,
       context,
     } = chatBody;
@@ -9461,6 +9464,7 @@ export async function startServer({
         skillId,
         designSystemId,
         streamFormat: def?.streamFormat ?? 'plain',
+        locale,
         connectedExternalMcp,
         // Plan §3.M2 / §3.V1 — forward the run's snapshot id so the
         // prompt composer can splice in `## Active stage` blocks.
